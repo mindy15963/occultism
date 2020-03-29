@@ -56,7 +56,6 @@ public class StandardBlockStateProvider extends BlockStateProvider {
                 .forEach(this::generateGlyphBlockState);
         this.simpleBlock(OccultismBlocks.STORAGE_CONTROLLER.get(),
                 this.models().getExistingFile(this.modLoc("block/storage_controller")));
-        this.models().withExistingParent("item/storage_controller", this.modLoc("block/storage_controller"));
         this.generateStableWormholeState(OccultismBlocks.STABLE_WORMHOLE.get());
         this.directionalBlock(OccultismBlocks.STORAGE_STABILIZER_TIER1.get(),
                 this.models().getExistingFile(this.modLoc("block/storage_stabilizer_tier1")));
@@ -66,6 +65,7 @@ public class StandardBlockStateProvider extends BlockStateProvider {
                 this.models().getExistingFile(this.modLoc("block/storage_stabilizer_tier3")));
         this.directionalBlock(OccultismBlocks.STORAGE_STABILIZER_TIER4.get(),
                 this.models().getExistingFile(this.modLoc("block/storage_stabilizer_tier4")));
+        this.stairsBlock(OccultismBlocks.OTHERSTONE_STAIRS.get(), this.modLoc("block/otherstone"));
     }
     //endregion Overrides
 

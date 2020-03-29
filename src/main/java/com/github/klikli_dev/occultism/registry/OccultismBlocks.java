@@ -119,6 +119,7 @@ public class OccultismBlocks {
                     true, LootTableType.OTHERWORLD_BLOCK);
     //Components
     public static final RegistryObject<SlabBlock> OTHERSTONE_SLAB = register("otherstone_slab", () -> new SlabBlock(Block.Properties.from(OTHERSTONE.get())));
+    public static final RegistryObject<StairsBlock> OTHERSTONE_STAIRS = register("otherstone_stairs", () -> new StairsBlock(() -> OTHERSTONE.get().getDefaultState(), Block.Properties.from(OTHERSTONE.get())));
     public static final RegistryObject<Block> OTHERSTONE_PEDESTAL = register("otherstone_pedestal", () -> new Block(Block.Properties.from(OTHERSTONE.get())));
     public static final RegistryObject<Block> STORAGE_CONTROLLER_BASE = register("storage_controller_base", () -> new Block(Block.Properties.from(OTHERSTONE.get())));
 
