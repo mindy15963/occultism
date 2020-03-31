@@ -27,6 +27,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.state.properties.Half;
+import net.minecraft.state.properties.StairsShape;
 import net.minecraft.util.Direction;
 import vazkii.patchouli.api.PatchouliAPI;
 
@@ -34,27 +35,19 @@ import java.util.Arrays;
 
 public class WishingWellBaseBlock {
     //region Fields
-    //TODO: replace stairs with directional variants
     private final String[][] pattern = new String[][]{
             {
-                    "SSSSS",
-                    "SSSSS",
-                    "SS SS",
-                    "SSSSS",
-                    "SSSSS",
+                    "T666S",
+                    "7R4Q5",
+                    "71 35",
+                    "7N2P5",
+                    "U888V",
             },
             {
                     "     ",
-                    " OSO ",
-                    " S S ",
-                    " OSO ",
-                    "     ",
-            },
-            {
-                    "     ",
-                    " B B ",
-                    "     ",
-                    " B B ",
+                    " O6O ",
+                    " 7 5 ",
+                    " O8O ",
                     "     ",
             },
             {
@@ -66,17 +59,24 @@ public class WishingWellBaseBlock {
             },
             {
                     "     ",
-                    " OSO ",
-                    " S S ",
-                    " OSO ",
+                    " B B ",
+                    "     ",
+                    " B B ",
                     "     ",
             },
             {
-                    "11111",
-                    "4OOO2",
-                    "4O0O2",
-                    "4OOO2",
-                    "33333",
+                    "     ",
+                    " O2O ",
+                    " 3 1 ",
+                    " O4O ",
+                    "     ",
+            },
+            {
+                    "X222W",
+                    "3OOO1",
+                    "3O0O1",
+                    "3OOO1",
+                    "Y444Z",
             }
     };
     protected PatchouliAPI.IPatchouliAPI api = PatchouliAPI.instance;
@@ -87,22 +87,33 @@ public class WishingWellBaseBlock {
         BlockState stairsBottom = OccultismBlocks.OTHERSTONE_STAIRS.get().getDefaultState();
         BlockState stairsTop = OccultismBlocks.OTHERSTONE_STAIRS.get().getDefaultState().with(StairsBlock.HALF, Half.TOP);
         Arrays.asList(
-                //     this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(HALF, Half.BOTTOM).with(SHAPE, StairsShape.STRAIGHT).with(WATERLOGGED, Boolean.valueOf(false)));
                 '1', stairsBottom, //Bottom, North, straight
                 '2', stairsBottom.with(StairsBlock.FACING, Direction.EAST), //Bottom, East, Straight
+                'X', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Bottom, East
+                'W', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Bottom, East
+                'P', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.INNER_RIGHT), //Bottom, East
+                'N', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.INNER_LEFT), //Bottom, East
                 '3', stairsBottom.with(StairsBlock.FACING, Direction.SOUTH), //Bottom, South, Straight,
                 '4', stairsBottom.with(StairsBlock.FACING, Direction.WEST), //Bottom, West, Straight
+                'Z', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Bottom, West
+                'Y', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Bottom, West
+                'R', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.INNER_RIGHT), //Bottom, West
+                'Q', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.INNER_LEFT), //Bottom, West
                 '5', stairsTop, //Top, North, straight
                 '6', stairsTop.with(StairsBlock.FACING, Direction.EAST), //Top, East, Straight
+                'T', stairsTop.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Top, West
+                'S', stairsTop.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Top, West
                 '7', stairsTop.with(StairsBlock.FACING, Direction.SOUTH), //Top, South, Straight,
                 '8', stairsTop.with(StairsBlock.FACING, Direction.WEST), //Top, West, Straight
+                'V', stairsTop.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Top, West
+                'U', stairsTop.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Top, West
                 //    '0', this.api.displayOnlyMatcher(OccultismBlocks.WISHING_WELL_BASE.get()),
-                '0', this.api.displayOnlyMatcher(OccultismBlocks.OTHERSTONE_SLAB.get()),
-                'S', this.api.looseBlockMatcher(OccultismBlocks.OTHERSTONE_STAIRS.get()),
+                '0', this.api.looseBlockMatcher(OccultismBlocks.OTHERSTONE_SLAB.get()),
                 'B', this.api.looseBlockMatcher(Blocks.STONE_BRICK_WALL),
                 'O', this.api.looseBlockMatcher(OccultismBlocks.OTHERSTONE.get()),
                 'A', this.api.airMatcher(),
-                ' ', this.api.anyMatcher());
+                ' ', this.api.anyMatcher()
+        );
     }
     //endregion Methods
 }
