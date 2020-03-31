@@ -50,9 +50,9 @@ public class DebugPentacle extends Pentacle {
     private final String[][] pattern = new String[][]{
             {
                     "T666S",
-                    "7Y4Z5",
+                    "7R4Q5",
                     "71 35",
-                    "7X2W5",
+                    "7N2P5",
                     "U888V",
             },
             {
@@ -106,10 +106,14 @@ public class DebugPentacle extends Pentacle {
                 '2', stairsBottom.with(StairsBlock.FACING, Direction.EAST), //Bottom, East, Straight
                 'X', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Bottom, East
                 'W', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Bottom, East
+                'P', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.INNER_RIGHT), //Bottom, East
+                'N', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.INNER_LEFT), //Bottom, East
                 '3', stairsBottom.with(StairsBlock.FACING, Direction.SOUTH), //Bottom, South, Straight,
                 '4', stairsBottom.with(StairsBlock.FACING, Direction.WEST), //Bottom, West, Straight
                 'Z', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Bottom, West
                 'Y', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Bottom, West
+                'R', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.INNER_RIGHT), //Bottom, West
+                'Q', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.INNER_LEFT), //Bottom, West
                 '5', stairsTop, //Top, North, straight
                 '6', stairsTop.with(StairsBlock.FACING, Direction.EAST), //Top, East, Straight
                 'T', stairsTop.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Top, West
@@ -120,7 +124,6 @@ public class DebugPentacle extends Pentacle {
                 'U', stairsTop.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Top, West
                 //    '0', this.api.displayOnlyMatcher(OccultismBlocks.WISHING_WELL_BASE.get()),
                 '0', this.api.displayOnlyMatcher(OccultismBlocks.OTHERSTONE_SLAB.get()),
-                'S', this.api.looseBlockMatcher(OccultismBlocks.OTHERSTONE_STAIRS.get()),
                 'B', this.api.looseBlockMatcher(Blocks.STONE_BRICK_WALL),
                 'O', this.api.looseBlockMatcher(OccultismBlocks.OTHERSTONE.get()),
                 'A', this.api.airMatcher(),
