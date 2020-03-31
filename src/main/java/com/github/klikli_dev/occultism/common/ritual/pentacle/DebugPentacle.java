@@ -49,24 +49,17 @@ public class DebugPentacle extends Pentacle {
 //    };
     private final String[][] pattern = new String[][]{
             {
-                    "SSSSS",
-                    "SSSSS",
-                    "SS SS",
-                    "SSSSS",
-                    "SSSSS",
+                    "T666S",
+                    "7Y4Z5",
+                    "71 35",
+                    "7X2W5",
+                    "U888V",
             },
             {
                     "     ",
-                    " OSO ",
-                    " S S ",
-                    " OSO ",
-                    "     ",
-            },
-            {
-                    "     ",
-                    " B B ",
-                    "     ",
-                    " B B ",
+                    " O6O ",
+                    " 7 5 ",
+                    " O8O ",
                     "     ",
             },
             {
@@ -78,9 +71,16 @@ public class DebugPentacle extends Pentacle {
             },
             {
                     "     ",
-                    " OSO ",
-                    " S S ",
-                    " OSO ",
+                    " B B ",
+                    "     ",
+                    " B B ",
+                    "     ",
+            },
+            {
+                    "     ",
+                    " O2O ",
+                    " 3 1 ",
+                    " O4O ",
                     "     ",
             },
             {
@@ -104,16 +104,20 @@ public class DebugPentacle extends Pentacle {
         this.mapping.addAll(Arrays.asList(
                 '1', stairsBottom, //Bottom, North, straight
                 '2', stairsBottom.with(StairsBlock.FACING, Direction.EAST), //Bottom, East, Straight
-                'X', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Bottom, East, Straight
-                'W', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Bottom, East, Straight
+                'X', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Bottom, East
+                'W', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Bottom, East
                 '3', stairsBottom.with(StairsBlock.FACING, Direction.SOUTH), //Bottom, South, Straight,
                 '4', stairsBottom.with(StairsBlock.FACING, Direction.WEST), //Bottom, West, Straight
-                'Z', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Bottom, West, Straight
-                'Y', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Bottom, West, Straight
+                'Z', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Bottom, West
+                'Y', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Bottom, West
                 '5', stairsTop, //Top, North, straight
                 '6', stairsTop.with(StairsBlock.FACING, Direction.EAST), //Top, East, Straight
+                'T', stairsTop.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Top, West
+                'S', stairsTop.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Top, West
                 '7', stairsTop.with(StairsBlock.FACING, Direction.SOUTH), //Top, South, Straight,
                 '8', stairsTop.with(StairsBlock.FACING, Direction.WEST), //Top, West, Straight
+                'V', stairsTop.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Top, West
+                'U', stairsTop.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Top, West
                 //    '0', this.api.displayOnlyMatcher(OccultismBlocks.WISHING_WELL_BASE.get()),
                 '0', this.api.displayOnlyMatcher(OccultismBlocks.OTHERSTONE_SLAB.get()),
                 'S', this.api.looseBlockMatcher(OccultismBlocks.OTHERSTONE_STAIRS.get()),
