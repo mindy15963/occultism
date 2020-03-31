@@ -65,7 +65,7 @@ public class StandardBlockStateProvider extends BlockStateProvider {
                 this.models().getExistingFile(this.modLoc("block/storage_stabilizer_tier3")));
         this.directionalBlock(OccultismBlocks.STORAGE_STABILIZER_TIER4.get(),
                 this.models().getExistingFile(this.modLoc("block/storage_stabilizer_tier4")));
-        this.stairsBlock(OccultismBlocks.OTHERSTONE_STAIRS.get(), this.modLoc("block/otherstone"));
+        this.stairsBlock(OccultismBlocks.OTHERSTONE_STAIRS.get(), this.modLoc("block/otherstone_16x16_seamless"));
     }
     //endregion Overrides
 

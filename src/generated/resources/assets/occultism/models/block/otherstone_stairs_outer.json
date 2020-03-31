@@ -1,8 +1,8 @@
 {
   "parent": "block/outer_stairs",
   "textures": {
-    "side": "occultism:block/otherstone",
-    "bottom": "occultism:block/otherstone",
-    "top": "occultism:block/otherstone"
+    "side": "occultism:block/otherstone_16x16_seamless",
+    "bottom": "occultism:block/otherstone_16x16_seamless",
+    "top": "occultism:block/otherstone_16x16_seamless"
   }
 }
