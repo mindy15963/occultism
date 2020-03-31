@@ -23,7 +23,11 @@
 package com.github.klikli_dev.occultism.common.block;
 
 import com.github.klikli_dev.occultism.registry.OccultismBlocks;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.StairsBlock;
+import net.minecraft.state.properties.Half;
+import net.minecraft.util.Direction;
 import vazkii.patchouli.api.PatchouliAPI;
 
 import java.util.Arrays;
@@ -68,11 +72,11 @@ public class WishingWellBaseBlock {
                     "     ",
             },
             {
-                    "SSSSS",
-                    "SOOOS",
-                    "SO0OS",
-                    "SOOOS",
-                    "SSSSS",
+                    "11111",
+                    "4OOO2",
+                    "4O0O2",
+                    "4OOO2",
+                    "33333",
             }
     };
     protected PatchouliAPI.IPatchouliAPI api = PatchouliAPI.instance;
@@ -80,9 +84,21 @@ public class WishingWellBaseBlock {
 
     //region Methods
     protected void setupMapping() {
+        BlockState stairsBottom = OccultismBlocks.OTHERSTONE_STAIRS.get().getDefaultState();
+        BlockState stairsTop = OccultismBlocks.OTHERSTONE_STAIRS.get().getDefaultState().with(StairsBlock.HALF, Half.TOP);
         Arrays.asList(
-                'S', this.api.looseBlockMatcher(OccultismBlocks.OTHERSTONE_STAIRS.get()),
+                //     this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(HALF, Half.BOTTOM).with(SHAPE, StairsShape.STRAIGHT).with(WATERLOGGED, Boolean.valueOf(false)));
+                '1', stairsBottom, //Bottom, North, straight
+                '2', stairsBottom.with(StairsBlock.FACING, Direction.EAST), //Bottom, East, Straight
+                '3', stairsBottom.with(StairsBlock.FACING, Direction.SOUTH), //Bottom, South, Straight,
+                '4', stairsBottom.with(StairsBlock.FACING, Direction.WEST), //Bottom, West, Straight
+                '5', stairsTop, //Top, North, straight
+                '6', stairsTop.with(StairsBlock.FACING, Direction.EAST), //Top, East, Straight
+                '7', stairsTop.with(StairsBlock.FACING, Direction.SOUTH), //Top, South, Straight,
+                '8', stairsTop.with(StairsBlock.FACING, Direction.WEST), //Top, West, Straight
                 //    '0', this.api.displayOnlyMatcher(OccultismBlocks.WISHING_WELL_BASE.get()),
+                '0', this.api.displayOnlyMatcher(OccultismBlocks.OTHERSTONE_SLAB.get()),
+                'S', this.api.looseBlockMatcher(OccultismBlocks.OTHERSTONE_STAIRS.get()),
                 'B', this.api.looseBlockMatcher(Blocks.STONE_BRICK_WALL),
                 'O', this.api.looseBlockMatcher(OccultismBlocks.OTHERSTONE.get()),
                 'A', this.api.airMatcher(),
