@@ -27,6 +27,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.state.properties.Half;
+import net.minecraft.state.properties.StairsShape;
 import net.minecraft.util.Direction;
 import vazkii.patchouli.api.IMultiblock;
 
@@ -83,11 +84,11 @@ public class DebugPentacle extends Pentacle {
                     "     ",
             },
             {
-                    "11111",
-                    "4OOO2",
-                    "4O0O2",
-                    "4OOO2",
-                    "33333",
+                    "X222W",
+                    "3OOO1",
+                    "3O0O1",
+                    "3OOO1",
+                    "Y444Z",
             }
     };
 
@@ -103,8 +104,12 @@ public class DebugPentacle extends Pentacle {
         this.mapping.addAll(Arrays.asList(
                 '1', stairsBottom, //Bottom, North, straight
                 '2', stairsBottom.with(StairsBlock.FACING, Direction.EAST), //Bottom, East, Straight
+                'X', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Bottom, East, Straight
+                'W', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Bottom, East, Straight
                 '3', stairsBottom.with(StairsBlock.FACING, Direction.SOUTH), //Bottom, South, Straight,
                 '4', stairsBottom.with(StairsBlock.FACING, Direction.WEST), //Bottom, West, Straight
+                'Z', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Bottom, West, Straight
+                'Y', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Bottom, West, Straight
                 '5', stairsTop, //Top, North, straight
                 '6', stairsTop.with(StairsBlock.FACING, Direction.EAST), //Top, East, Straight
                 '7', stairsTop.with(StairsBlock.FACING, Direction.SOUTH), //Top, South, Straight,
