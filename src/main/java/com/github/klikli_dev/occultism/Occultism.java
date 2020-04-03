@@ -134,6 +134,11 @@ public class Occultism {
                 pentacle.registerMultiblock(multiBlockId);
         });
 
+        ResourceLocation wishingWell = modLoc("structure." + OccultismBlocks.WISTHING_WELL.getId().getPath());
+        if(PatchouliAPI.instance.getMultiblock(wishingWell) == null){
+            OccultismBlocks.WISTHING_WELL.get().registerMultiblock(wishingWell);
+        }
+
         LOGGER.info("Common setup complete.");
     }
 

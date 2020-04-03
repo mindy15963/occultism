@@ -179,6 +179,11 @@ public class OccultismBlocks {
                     .notSolid()
             ));
 
+    public static final RegistryObject<WishingWellBaseBlock> WISTHING_WELL = register(
+            "wishing_well", () -> new WishingWellBaseBlock(
+                    Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(1.5f, 30)
+                            .notSolid()));
+
     //Crops
     public static final RegistryObject<ReplantableCropsBlock> DATURA = register("datura",
             () -> new ReplantableCropsBlock(

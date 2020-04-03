@@ -23,17 +23,21 @@
 package com.github.klikli_dev.occultism.common.block;
 
 import com.github.klikli_dev.occultism.registry.OccultismBlocks;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.state.properties.Half;
 import net.minecraft.state.properties.StairsShape;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
+import vazkii.patchouli.api.IMultiblock;
 import vazkii.patchouli.api.PatchouliAPI;
 
 import java.util.Arrays;
+import java.util.List;
 
-public class WishingWellBaseBlock {
+public class WishingWellBaseBlock extends Block {
     //region Fields
     private final String[][] pattern = new String[][]{
             {
@@ -79,41 +83,74 @@ public class WishingWellBaseBlock {
                     "Y444Z",
             }
     };
-    protected PatchouliAPI.IPatchouliAPI api = PatchouliAPI.instance;
+    public IMultiblock blockMatcher;
     //endregion Fields
 
+    //region Initialization
+    public WishingWellBaseBlock(Properties properties) {
+        super(properties);
+    }
+    //endregion Initialization
+
     //region Methods
-    protected void setupMapping() {
+    public void registerMultiblock(ResourceLocation id) {
+        PatchouliAPI.IPatchouliAPI api = PatchouliAPI.instance;
+
         BlockState stairsBottom = OccultismBlocks.OTHERSTONE_STAIRS.get().getDefaultState();
-        BlockState stairsTop = OccultismBlocks.OTHERSTONE_STAIRS.get().getDefaultState().with(StairsBlock.HALF, Half.TOP);
-        Arrays.asList(
+        BlockState stairsTop =
+                OccultismBlocks.OTHERSTONE_STAIRS.get().getDefaultState().with(StairsBlock.HALF, Half.TOP);
+        List<Object> mapping = Arrays.asList(
                 '1', stairsBottom, //Bottom, North, straight
                 '2', stairsBottom.with(StairsBlock.FACING, Direction.EAST), //Bottom, East, Straight
-                'X', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Bottom, East
-                'W', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Bottom, East
-                'P', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.INNER_RIGHT), //Bottom, East
-                'N', stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.INNER_LEFT), //Bottom, East
+                'X',
+                stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT),
+                //Bottom, East
+                'W',
+                stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT),
+                //Bottom, East
+                'P',
+                stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.INNER_RIGHT),
+                //Bottom, East
+                'N',
+                stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.INNER_LEFT),
+                //Bottom, East
                 '3', stairsBottom.with(StairsBlock.FACING, Direction.SOUTH), //Bottom, South, Straight,
                 '4', stairsBottom.with(StairsBlock.FACING, Direction.WEST), //Bottom, West, Straight
-                'Z', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Bottom, West
-                'Y', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Bottom, West
-                'R', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.INNER_RIGHT), //Bottom, West
-                'Q', stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.INNER_LEFT), //Bottom, West
+                'Z',
+                stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT),
+                //Bottom, West
+                'Y',
+                stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT),
+                //Bottom, West
+                'R',
+                stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.INNER_RIGHT),
+                //Bottom, West
+                'Q',
+                stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.INNER_LEFT),
+                //Bottom, West
                 '5', stairsTop, //Top, North, straight
                 '6', stairsTop.with(StairsBlock.FACING, Direction.EAST), //Top, East, Straight
-                'T', stairsTop.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Top, West
-                'S', stairsTop.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Top, West
+                'T',
+                stairsTop.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT),
+                //Top, West
+                'S', stairsTop.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT),
+                //Top, West
                 '7', stairsTop.with(StairsBlock.FACING, Direction.SOUTH), //Top, South, Straight,
                 '8', stairsTop.with(StairsBlock.FACING, Direction.WEST), //Top, West, Straight
-                'V', stairsTop.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Top, West
-                'U', stairsTop.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Top, West
+                'V',
+                stairsTop.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT),
+                //Top, West
+                'U', stairsTop.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT),
+                //Top, West
                 //    '0', this.api.displayOnlyMatcher(OccultismBlocks.WISHING_WELL_BASE.get()),
-                '0', this.api.looseBlockMatcher(OccultismBlocks.OTHERSTONE_SLAB.get()),
-                'B', this.api.looseBlockMatcher(Blocks.STONE_BRICK_WALL),
-                'O', this.api.looseBlockMatcher(OccultismBlocks.OTHERSTONE.get()),
-                'A', this.api.airMatcher(),
-                ' ', this.api.anyMatcher()
+                '0', api.looseBlockMatcher(OccultismBlocks.OTHERSTONE_SLAB.get()),
+                'B', api.looseBlockMatcher(Blocks.STONE_BRICK_WALL),
+                'O', api.looseBlockMatcher(OccultismBlocks.OTHERSTONE.get()),
+                'A', api.airMatcher(),
+                ' ', api.anyMatcher()
         );
+        this.blockMatcher =
+                api.registerMultiblock(id, api.makeMultiblock(this.pattern, mapping.toArray()).setSymmetrical(true));
     }
     //endregion Methods
 }
