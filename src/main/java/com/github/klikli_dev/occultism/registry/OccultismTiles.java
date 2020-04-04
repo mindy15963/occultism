@@ -54,6 +54,10 @@ public class OccultismTiles {
             "dimensional_mineshaft", () -> TileEntityType.Builder.create(DimensionalMineshaftTileEntity::new,
                     OccultismBlocks.DIMENSIONAL_MINESHAFT.get()).build(null));
 
+    public static final RegistryObject<TileEntityType<WishingWellTileEntity>> WISHING_WELL = TILES.register(
+            "wishing_well", () -> TileEntityType.Builder.create(WishingWellTileEntity::new,
+                    OccultismBlocks.WISTHING_WELL.get()).build(null));
+
     //endregion Fields
 
 }

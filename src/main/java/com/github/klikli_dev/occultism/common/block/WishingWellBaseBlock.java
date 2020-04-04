@@ -23,17 +23,21 @@
 package com.github.klikli_dev.occultism.common.block;
 
 import com.github.klikli_dev.occultism.registry.OccultismBlocks;
+import com.github.klikli_dev.occultism.registry.OccultismTiles;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.state.properties.Half;
 import net.minecraft.state.properties.StairsShape;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.IBlockReader;
 import vazkii.patchouli.api.IMultiblock;
 import vazkii.patchouli.api.PatchouliAPI;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -152,5 +156,17 @@ public class WishingWellBaseBlock extends Block {
         this.blockMatcher =
                 api.registerMultiblock(id, api.makeMultiblock(this.pattern, mapping.toArray()).setSymmetrical(true));
     }
+
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return OccultismTiles.WISHING_WELL.get().create();
+    }
+
     //endregion Methods
 }
