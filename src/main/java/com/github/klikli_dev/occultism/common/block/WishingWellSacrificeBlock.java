@@ -36,7 +36,7 @@ import net.minecraft.world.World;
 
 public class WishingWellSacrificeBlock extends Block {
     //region Fields
-    protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
+    protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
     //endregion Fields
 
     //region Initialization
@@ -63,8 +63,10 @@ public class WishingWellSacrificeBlock extends Block {
 
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        if (entityIn instanceof ItemEntity)
+        if (entityIn instanceof ItemEntity && !entityIn.removed){
             Occultism.LOGGER.info("Sacrifice detected");
+            entityIn.remove();
+        }
         super.onEntityCollision(state, worldIn, pos, entityIn);
     }
 
