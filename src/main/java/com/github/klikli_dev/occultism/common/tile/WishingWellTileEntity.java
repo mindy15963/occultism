@@ -88,7 +88,7 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
     }
 
     protected void spawnFluidColumn() {
-        BlockPos fluidPos = this.pos.add(0, 3, 0);
+        BlockPos fluidPos = this.pos.add(0, 4, 0);
         if (this.world.getBlockState(fluidPos).getFluidState().getFluid() != Fluids.WATER) {
             this.world.setBlockState(fluidPos, Fluids.WATER.getDefaultState().getBlockState(), 11);
         }
