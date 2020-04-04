@@ -40,6 +40,7 @@ import vazkii.patchouli.api.PatchouliAPI;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class WishingWellBaseBlock extends Block {
     //region Fields
@@ -87,7 +88,6 @@ public class WishingWellBaseBlock extends Block {
                     "Y444Z",
             }
     };
-    public IMultiblock displayBlockMatcher;
     public IMultiblock blockMatcher;
     //endregion Fields
 
@@ -97,116 +97,7 @@ public class WishingWellBaseBlock extends Block {
     }
     //endregion Initialization
 
-    //region Methods
-    public void registerMultiblock(ResourceLocation id) {
-        PatchouliAPI.IPatchouliAPI api = PatchouliAPI.instance;
-
-        BlockState stairsBottom = OccultismBlocks.OTHERSTONE_STAIRS.get().getDefaultState();
-        BlockState stairsTop =
-                OccultismBlocks.OTHERSTONE_STAIRS.get().getDefaultState().with(StairsBlock.HALF, Half.TOP);
-        List<Object> displayMapping = Arrays.asList(
-                '1', stairsBottom, //Bottom, North, straight
-                '2', stairsBottom.with(StairsBlock.FACING, Direction.EAST), //Bottom, East, Straight
-                'X',
-                stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT),
-                //Bottom, East
-                'W',
-                stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT),
-                //Bottom, East
-                'P',
-                stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.INNER_RIGHT),
-                //Bottom, East
-                'N',
-                stairsBottom.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.INNER_LEFT),
-                //Bottom, East
-                '3', stairsBottom.with(StairsBlock.FACING, Direction.SOUTH), //Bottom, South, Straight,
-                '4', stairsBottom.with(StairsBlock.FACING, Direction.WEST), //Bottom, West, Straight
-                'Z',
-                stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT),
-                //Bottom, West
-                'Y',
-                stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT),
-                //Bottom, West
-                'R',
-                stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.INNER_RIGHT),
-                //Bottom, West
-                'Q',
-                stairsBottom.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.INNER_LEFT),
-                //Bottom, West
-                '5', stairsTop, //Top, North, straight
-                '6', stairsTop.with(StairsBlock.FACING, Direction.EAST), //Top, East, Straight
-                'T',
-                stairsTop.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT),
-                //Top, West
-                'S', stairsTop.with(StairsBlock.FACING, Direction.EAST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT),
-                //Top, West
-                '7', stairsTop.with(StairsBlock.FACING, Direction.SOUTH), //Top, South, Straight,
-                '8', stairsTop.with(StairsBlock.FACING, Direction.WEST), //Top, West, Straight
-                'V',
-                stairsTop.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT),
-                //Top, West
-                'U', stairsTop.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT),
-                //Top, West
-                '0', api.looseBlockMatcher(OccultismBlocks.WISTHING_WELL.get()),
-                'B', api.looseBlockMatcher(Blocks.STONE_BRICK_WALL),
-                'O', api.looseBlockMatcher(OccultismBlocks.OTHERSTONE.get()),
-                ' ', api.anyMatcher()
-        );
-        this.displayBlockMatcher =
-                api.registerMultiblock(id, api.makeMultiblock(this.pattern, displayMapping.toArray()).setSymmetrical(true));
-
-        List<Object> mapping = Arrays.asList(
-                '1', stairsBottom, //Bottom, North, straight
-                '2', stairsBottom, //Bottom, East, Straight
-                'X',
-                stairsBottom,
-                //Bottom, East
-                'W',
-                stairsBottom,
-                //Bottom, East
-                'P',
-                stairsBottom,
-                //Bottom, East
-                'N',
-                stairsBottom,
-                //Bottom, East
-                '3', stairsBottom, //Bottom, South, Straight,
-                '4', stairsBottom, //Bottom, West, Straight
-                'Z',
-                stairsBottom,
-                //Bottom, West
-                'Y',
-                stairsBottom,
-                //Bottom, West
-                'R',
-                stairsBottom,
-                //Bottom, West
-                'Q',
-                stairsBottom,
-                //Bottom, West
-                '5', stairsTop, //Top, North, straight
-                '6', stairsTop, //Top, East, Straight
-                'T',
-                stairsTop,
-                //Top, West
-                'S', stairsTop,
-                //Top, West
-                '7', stairsTop, //Top, South, Straight,
-                '8', stairsTop, //Top, West, Straight
-                'V',
-                stairsTop,
-                //Top, West
-                'U', stairsTop,
-                //Top, West
-                '0', api.looseBlockMatcher(OccultismBlocks.WISTHING_WELL.get()),
-                'B', api.looseBlockMatcher(Blocks.STONE_BRICK_WALL),
-                'O', api.looseBlockMatcher(OccultismBlocks.OTHERSTONE.get()),
-                ' ', api.anyMatcher()
-        );
-        this.blockMatcher =
-                api.registerMultiblock(id, api.makeMultiblock(this.pattern, mapping.toArray()).setSymmetrical(true));
-    }
-
+    //region Overrides
     @Override
     public boolean hasTileEntity(BlockState state) {
         return true;
@@ -217,6 +108,94 @@ public class WishingWellBaseBlock extends Block {
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return OccultismTiles.WISHING_WELL.get().create();
     }
+    //endregion Overrides
 
+    //region Methods
+    public void registerMultiblock(ResourceLocation id) {
+        PatchouliAPI.IPatchouliAPI api = PatchouliAPI.instance;
+
+        BlockState stairsBottom = OccultismBlocks.OTHERSTONE_STAIRS.get().getDefaultState();
+        BlockState stairsTop =
+                OccultismBlocks.OTHERSTONE_STAIRS.get().getDefaultState().with(StairsBlock.HALF, Half.TOP);
+
+        Predicate<BlockState> anyStairsPredicate =
+                (state) -> state.getBlock() == OccultismBlocks.OTHERSTONE_STAIRS.get();
+        List<Object> mapping = Arrays.asList(
+                '1', api.predicateMatcher(stairsBottom, anyStairsPredicate), //Bottom, North, straight
+                '2', api.predicateMatcher(stairsBottom.with(StairsBlock.FACING, Direction.EAST), anyStairsPredicate),
+                //Bottom, East, Straight
+                'X',
+                api.predicateMatcher(stairsBottom.with(StairsBlock.FACING, Direction.EAST)
+                                             .with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), anyStairsPredicate),
+                //Bottom, East
+                'W',
+                api.predicateMatcher(stairsBottom.with(StairsBlock.FACING, Direction.EAST)
+                                             .with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), anyStairsPredicate),
+                //Bottom, East
+                'P',
+                api.predicateMatcher(stairsBottom.with(StairsBlock.FACING, Direction.EAST)
+                                             .with(StairsBlock.SHAPE, StairsShape.INNER_RIGHT), anyStairsPredicate),
+                //Bottom, East
+                'N',
+                api.predicateMatcher(stairsBottom.with(StairsBlock.FACING, Direction.EAST)
+                                             .with(StairsBlock.SHAPE, StairsShape.INNER_LEFT), anyStairsPredicate),
+                //Bottom, East
+                '3', api.predicateMatcher(stairsBottom.with(StairsBlock.FACING, Direction.SOUTH), anyStairsPredicate),
+                //Bottom, South, Straight,
+                '4', api.predicateMatcher(stairsBottom.with(StairsBlock.FACING, Direction.WEST), anyStairsPredicate),
+                //Bottom, West, Straight
+                'Z',
+                api.predicateMatcher(stairsBottom.with(StairsBlock.FACING, Direction.WEST)
+                                             .with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), anyStairsPredicate),
+                //Bottom, West
+                'Y',
+                api.predicateMatcher(stairsBottom.with(StairsBlock.FACING, Direction.WEST)
+                                             .with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), anyStairsPredicate),
+                //Bottom, West
+                'R',
+                api.predicateMatcher(stairsBottom.with(StairsBlock.FACING, Direction.WEST)
+                                             .with(StairsBlock.SHAPE, StairsShape.INNER_RIGHT), anyStairsPredicate),
+                //Bottom, West
+                'Q',
+                api.predicateMatcher(stairsBottom.with(StairsBlock.FACING, Direction.WEST)
+                                             .with(StairsBlock.SHAPE, StairsShape.INNER_LEFT), anyStairsPredicate),
+                //Bottom, West
+                '5', api.predicateMatcher(stairsTop, anyStairsPredicate), //Top, North, straight
+                '6',
+                api.predicateMatcher(stairsTop.with(StairsBlock.FACING, Direction.EAST), anyStairsPredicate),
+                //Top, East, Straight
+                'T',
+                api.predicateMatcher(stairsTop.with(StairsBlock.FACING, Direction.EAST)
+                                             .with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT),
+                        anyStairsPredicate),
+                //Top, West
+                'S', api.predicateMatcher(stairsTop.with(StairsBlock.FACING, Direction.EAST)
+                                                  .with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT),
+                        anyStairsPredicate),
+                //Top, West
+                '7',
+                api.predicateMatcher(stairsTop.with(StairsBlock.FACING, Direction.SOUTH), anyStairsPredicate),
+                //Top, South, Straight,
+                '8',
+                api.predicateMatcher(stairsTop.with(StairsBlock.FACING, Direction.WEST), anyStairsPredicate),
+                //Top, West, Straight
+                'V',
+                api.predicateMatcher(stairsTop.with(StairsBlock.FACING, Direction.WEST)
+                                             .with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT),
+                        anyStairsPredicate),
+                //Top, West
+                'U', api.predicateMatcher(stairsTop.with(StairsBlock.FACING, Direction.WEST)
+                                                  .with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT),
+                        anyStairsPredicate),
+                //Top, West
+                '0', api.looseBlockMatcher(OccultismBlocks.WISTHING_WELL.get()),
+                'B', api.looseBlockMatcher(Blocks.STONE_BRICK_WALL),
+                'O', api.looseBlockMatcher(OccultismBlocks.OTHERSTONE.get()),
+                ' ', api.anyMatcher()
+        );
+        this.blockMatcher =
+                api.registerMultiblock(id,
+                        api.makeMultiblock(this.pattern, mapping.toArray()).setSymmetrical(true));
+    }
     //endregion Methods
 }
