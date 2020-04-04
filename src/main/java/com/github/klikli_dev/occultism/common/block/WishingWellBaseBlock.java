@@ -87,6 +87,7 @@ public class WishingWellBaseBlock extends Block {
                     "Y444Z",
             }
     };
+    public IMultiblock displayBlockMatcher;
     public IMultiblock blockMatcher;
     //endregion Fields
 
@@ -103,7 +104,7 @@ public class WishingWellBaseBlock extends Block {
         BlockState stairsBottom = OccultismBlocks.OTHERSTONE_STAIRS.get().getDefaultState();
         BlockState stairsTop =
                 OccultismBlocks.OTHERSTONE_STAIRS.get().getDefaultState().with(StairsBlock.HALF, Half.TOP);
-        List<Object> mapping = Arrays.asList(
+        List<Object> displayMapping = Arrays.asList(
                 '1', stairsBottom, //Bottom, North, straight
                 '2', stairsBottom.with(StairsBlock.FACING, Direction.EAST), //Bottom, East, Straight
                 'X',
@@ -146,11 +147,60 @@ public class WishingWellBaseBlock extends Block {
                 //Top, West
                 'U', stairsTop.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT),
                 //Top, West
-                //    '0', this.api.displayOnlyMatcher(OccultismBlocks.WISHING_WELL_BASE.get()),
-                '0', api.looseBlockMatcher(OccultismBlocks.OTHERSTONE_SLAB.get()),
+                '0', api.looseBlockMatcher(OccultismBlocks.WISTHING_WELL.get()),
                 'B', api.looseBlockMatcher(Blocks.STONE_BRICK_WALL),
                 'O', api.looseBlockMatcher(OccultismBlocks.OTHERSTONE.get()),
-                'A', api.airMatcher(),
+                ' ', api.anyMatcher()
+        );
+        this.displayBlockMatcher =
+                api.registerMultiblock(id, api.makeMultiblock(this.pattern, displayMapping.toArray()).setSymmetrical(true));
+
+        List<Object> mapping = Arrays.asList(
+                '1', stairsBottom, //Bottom, North, straight
+                '2', stairsBottom, //Bottom, East, Straight
+                'X',
+                stairsBottom,
+                //Bottom, East
+                'W',
+                stairsBottom,
+                //Bottom, East
+                'P',
+                stairsBottom,
+                //Bottom, East
+                'N',
+                stairsBottom,
+                //Bottom, East
+                '3', stairsBottom, //Bottom, South, Straight,
+                '4', stairsBottom, //Bottom, West, Straight
+                'Z',
+                stairsBottom,
+                //Bottom, West
+                'Y',
+                stairsBottom,
+                //Bottom, West
+                'R',
+                stairsBottom,
+                //Bottom, West
+                'Q',
+                stairsBottom,
+                //Bottom, West
+                '5', stairsTop, //Top, North, straight
+                '6', stairsTop, //Top, East, Straight
+                'T',
+                stairsTop,
+                //Top, West
+                'S', stairsTop,
+                //Top, West
+                '7', stairsTop, //Top, South, Straight,
+                '8', stairsTop, //Top, West, Straight
+                'V',
+                stairsTop,
+                //Top, West
+                'U', stairsTop,
+                //Top, West
+                '0', api.looseBlockMatcher(OccultismBlocks.WISTHING_WELL.get()),
+                'B', api.looseBlockMatcher(Blocks.STONE_BRICK_WALL),
+                'O', api.looseBlockMatcher(OccultismBlocks.OTHERSTONE.get()),
                 ' ', api.anyMatcher()
         );
         this.blockMatcher =

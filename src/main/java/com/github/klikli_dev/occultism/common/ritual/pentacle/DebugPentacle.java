@@ -122,11 +122,9 @@ public class DebugPentacle extends Pentacle {
                 '8', stairsTop.with(StairsBlock.FACING, Direction.WEST), //Top, West, Straight
                 'V', stairsTop.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_RIGHT), //Top, West
                 'U', stairsTop.with(StairsBlock.FACING, Direction.WEST).with(StairsBlock.SHAPE, StairsShape.OUTER_LEFT), //Top, West
-                //    '0', this.api.displayOnlyMatcher(OccultismBlocks.WISHING_WELL_BASE.get()),
-                '0', this.api.looseBlockMatcher(OccultismBlocks.OTHERSTONE_SLAB.get()),
+                '0', this.api.displayOnlyMatcher(OccultismBlocks.WISTHING_WELL.get()),
                 'B', this.api.looseBlockMatcher(Blocks.STONE_BRICK_WALL),
                 'O', this.api.looseBlockMatcher(OccultismBlocks.OTHERSTONE.get()),
-                'A', this.api.airMatcher(),
                 ' ', this.api.anyMatcher()
         ));
     }
