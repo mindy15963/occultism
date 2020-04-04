@@ -184,6 +184,11 @@ public class OccultismBlocks {
                     Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(1.5f, 30)
                             .notSolid()));
 
+    public static final RegistryObject<WishingWellSacrificeBlock> WISHING_WELL_SACRIFICE = register(
+            "wishing_well_sacrifice", () -> new WishingWellSacrificeBlock(
+                    Block.Properties.create(Material.MISCELLANEOUS).sound(SoundType.CLOTH).doesNotBlockMovement().hardnessAndResistance(Float.POSITIVE_INFINITY)
+                            ), false, LootTableType.EMPTY);
+
     //Crops
     public static final RegistryObject<ReplantableCropsBlock> DATURA = register("datura",
             () -> new ReplantableCropsBlock(

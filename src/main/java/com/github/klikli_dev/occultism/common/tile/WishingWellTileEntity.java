@@ -33,6 +33,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class WishingWellTileEntity extends NetworkedTileEntity implements ITickableTileEntity {
     //region Fields
     /**
+     * Can be outdated, is updated every 40-60 seconds.
+     */
+    public boolean hasValidMultiblock;
+    /**
      * Init flag for water spawning
      */
     protected boolean hasEverSpawnedWater;
@@ -40,11 +44,6 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
      * Init flag for multiblock check.
      */
     protected boolean hasEverValidatedMultiblock;
-    /**
-     * Can be outdated, is updated every 40-60 seconds.
-     */
-    public boolean hasValidMultiblock;
-
     /**
      * the ticks between multiblock check ticks.
      */
@@ -77,9 +76,17 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
             if (this.hasValidMultiblock) {
                 this.spawnFluidColumn();
             }
+            else {
+
+            }
         }
     }
 
+    @Override
+    public void remove() {
+        this.removeFluidColumn();
+        super.remove();
+    }
     //endregion Overrides
 
     //region Methods
@@ -91,6 +98,23 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
         BlockPos fluidPos = this.pos.add(0, 4, 0);
         if (this.world.getBlockState(fluidPos).getFluidState().getFluid() != Fluids.WATER) {
             this.world.setBlockState(fluidPos, Fluids.WATER.getDefaultState().getBlockState(), 11);
+        }
+
+        BlockPos sacrificePos = this.pos.add(0, 5, 0);
+        if (this.world.getBlockState(sacrificePos).getBlock() != OccultismBlocks.WISHING_WELL_SACRIFICE.get()) {
+            this.world.setBlockState(sacrificePos, OccultismBlocks.WISHING_WELL_SACRIFICE.get().getDefaultState(), 2);
+        }
+    }
+
+    protected void removeFluidColumn() {
+        BlockPos fluidPos = this.pos.add(0, 4, 0);
+        if (this.world.getBlockState(fluidPos).getFluidState().getFluid() == Fluids.WATER) {
+            this.world.removeBlock(fluidPos, false);
+        }
+
+        BlockPos sacrificePos = this.pos.add(0, 5, 0);
+        if (this.world.getBlockState(sacrificePos).getBlock() == OccultismBlocks.WISHING_WELL_SACRIFICE.get()) {
+            this.world.removeBlock(sacrificePos, false);
         }
     }
     //endregion Methods

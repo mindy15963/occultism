@@ -152,6 +152,7 @@
     "block.occultism.iesnium_block": "Iesnium Block",
     "block.occultism.dimensional_mineshaft": "Dimensional Mineshaft",
     "block.occultism.wishing_well": "Wishing Well Core",
+    "block.occultism.wishing_well_sacrifice": "Wishing Well",
     "_comment": "Entities",
     "entity.occultism.foliot": "Foliot",
     "entity.occultism.djinni": "Djinni",
