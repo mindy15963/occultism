@@ -23,6 +23,7 @@
 package com.github.klikli_dev.occultism.common.block;
 
 import com.github.klikli_dev.occultism.Occultism;
+import com.github.klikli_dev.occultism.common.tile.WishingWellTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -64,8 +65,8 @@ public class WishingWellSacrificeBlock extends Block {
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
         if (entityIn instanceof ItemEntity && !entityIn.removed){
-            Occultism.LOGGER.info("Sacrifice detected");
-            entityIn.remove();
+            WishingWellTileEntity wishingWell = (WishingWellTileEntity) worldIn.getTileEntity(pos.add(0, -5, 0));
+            wishingWell.sacrificeItem((ItemEntity)entityIn);
         }
         super.onEntityCollision(state, worldIn, pos, entityIn);
     }
