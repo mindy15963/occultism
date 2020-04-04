@@ -26,7 +26,6 @@ import com.github.klikli_dev.occultism.registry.OccultismBlocks;
 import com.github.klikli_dev.occultism.registry.OccultismTiles;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.math.BlockPos;
 
@@ -93,7 +92,7 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
 
     //region Methods
 
-    public void sacrificeItem(ItemEntity item){
+    public void sacrificeItem(ItemEntity item) {
         //TOOD: check if recipe exists, if so store and remove.
     }
 

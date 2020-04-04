@@ -29,6 +29,8 @@ import com.github.klikli_dev.occultism.common.block.otherworld.*;
 import com.github.klikli_dev.occultism.common.block.storage.StableWormholeBlock;
 import com.github.klikli_dev.occultism.common.block.storage.StorageControllerBlock;
 import com.github.klikli_dev.occultism.common.block.storage.StorageStabilizerBlock;
+import com.github.klikli_dev.occultism.common.block.wishing_well.WishingWellBaseBlock;
+import com.github.klikli_dev.occultism.common.block.wishing_well.WishingWellSacrificeBlock;
 import com.github.klikli_dev.occultism.common.world.tree.OtherworldTree;
 import com.github.klikli_dev.occultism.common.world.tree.OtherworldNaturalTree;
 import net.minecraft.block.*;
