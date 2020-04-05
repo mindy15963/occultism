@@ -26,10 +26,17 @@ import com.github.klikli_dev.occultism.registry.OccultismBlocks;
 import com.github.klikli_dev.occultism.registry.OccultismTiles;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.Constants;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 public class WishingWellTileEntity extends NetworkedTileEntity implements ITickableTileEntity {
     //region Fields
@@ -49,6 +56,16 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
      * the ticks between multiblock check ticks.
      */
     protected int multiBlockTickTime;
+
+    /**
+     * The queue of item stacks to dissolve over time.
+     */
+    protected Queue<ItemStack> itemsToDissolve = new ArrayDeque<>();
+
+    protected ItemStack currentItemToDissolve;
+    protected SacrificeTier currentItemSacrificeTier;
+    protected int currentItemDissolveTicks;
+
     //endregion Fields
 
     //region Initialization
@@ -84,6 +101,36 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
     }
 
     @Override
+    public void read(CompoundNBT compound) {
+        super.read(compound);
+
+        ListNBT nbtList = compound.getList("itemsToDissolve", Constants.NBT.TAG_COMPOUND);
+        this.itemsToDissolve = new ArrayDeque<>(
+                nbtList.stream().map(CompoundNBT.class::cast).map(ItemStack::read).collect(Collectors.toList()));
+
+        if (compound.contains("currentItemToDissolve")) {
+            this.currentItemToDissolve = ItemStack.read(compound.getCompound("currentItemToDissolve"));
+            this.currentItemSacrificeTier = SacrificeTier.values()[compound.getInt("currentItemSacrificeTier")];
+            this.currentItemDissolveTicks = compound.getInt("currentItemDissolveTicks");
+        }
+    }
+
+    @Override
+    public CompoundNBT write(CompoundNBT compound) {
+        //Store the items to dissolve
+        ListNBT nbtList = new ListNBT();
+        this.itemsToDissolve.forEach(itemStack -> nbtList.add(itemStack.serializeNBT()));
+        compound.put("itemsToDissolve", nbtList);
+
+        if (this.currentItemToDissolve != null) {
+            compound.put("currentItemToDissolve", this.currentItemToDissolve.serializeNBT());
+            compound.putInt("currentItemSacrificeTier", this.currentItemSacrificeTier.ordinal());
+            compound.putInt("currentItemDissolveTicks", this.currentItemDissolveTicks);
+        }
+        return super.write(compound);
+    }
+
+    @Override
     public void remove() {
         this.removeFluidColumn();
         super.remove();
@@ -94,6 +141,7 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
 
     public void sacrificeItem(ItemEntity item) {
         //TOOD: check if recipe exists, if so store and remove.
+        //this.itemsToDissolve.add(item.getItem());
     }
 
     public boolean hasValidMultiblock() {
@@ -124,4 +172,20 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
         }
     }
     //endregion Methods
+
+    public enum SacrificeTier {
+        TIER1(1.0f),
+        TIER2(2.0f),
+        TIER3(3.0f);
+
+        //region Fields
+        public float speedModifier;
+        //endregion Fields
+
+        //region Initialization
+        SacrificeTier(float speedModifier) {
+            this.speedModifier = speedModifier;
+        }
+        //endregion Initialization
+    }
 }
