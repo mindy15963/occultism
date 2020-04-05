@@ -177,7 +177,6 @@ public class WishingWellSacrificeRecipe implements IRecipe<ItemStackFakeInventor
         @Override
         public WishingWellSacrificeRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
             Ingredient ingredient = Ingredient.read(buffer);
-            Ingredient result = Ingredient.read(buffer);
             int dissolveTicks = buffer.readInt();
             float earthEssence = buffer.readFloat();
             float airEssence = buffer.readFloat();
