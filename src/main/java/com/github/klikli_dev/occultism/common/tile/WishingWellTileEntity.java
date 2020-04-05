@@ -72,6 +72,11 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
     protected int currentItemDissolveTicks;
     protected ItemStackFakeInventory sacrificeFakeInventory = new ItemStackFakeInventory(ItemStack.EMPTY);
 
+    protected float earthEssence;
+    protected float airEssence;
+    protected float fireEssence;
+    protected float waterEssence;
+
     //endregion Fields
 
     //region Initialization
@@ -116,7 +121,17 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
                 }
 
                 if (this.currentSacrificeRecipe != null) {
+
                     //TODO: do the dissolve magic -> add essences
+
+
+                    this.currentItemDissolveTicks++;
+                    if(this.currentItemDissolveTicks >= this.currentSacrificeRecipe.getDissolveTicks()){
+                        //Done with dissolving item, prepare for next
+                        this.currentItemDissolveTicks = 0;
+                        this.currentItemToDissolve = ItemStack.EMPTY;
+                        this.currentSacrificeRecipe = null;
+                    }
                 }
                 else {
                     //If still null: should never happen
@@ -132,15 +147,23 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
     public void read(CompoundNBT compound) {
         super.read(compound);
 
+        //read dissolve queue
         ListNBT nbtList = compound.getList("itemsToDissolve", Constants.NBT.TAG_COMPOUND);
         this.itemsToDissolve = new ArrayDeque<>(
                 nbtList.stream().map(CompoundNBT.class::cast).map(ItemStack::read).collect(Collectors.toList()));
 
+        //read current item to dissolve
         this.currentItemToDissolve = ItemStack.EMPTY;
         if (compound.contains("currentItemToDissolve")) {
             this.currentItemToDissolve = ItemStack.read(compound.getCompound("currentItemToDissolve"));
             this.currentItemDissolveTicks = compound.getInt("currentItemDissolveTicks");
         }
+
+        //read current essence level
+        this.earthEssence = compound.getFloat("earthEssence");
+        this.airEssence = compound.getFloat("airEssence");
+        this.fireEssence = compound.getFloat("fireEssence");
+        this.waterEssence = compound.getFloat("waterEssence");
     }
 
     @Override
@@ -150,11 +173,20 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
         this.itemsToDissolve.forEach(itemStack -> nbtList.add(itemStack.serializeNBT()));
         compound.put("itemsToDissolve", nbtList);
 
+        //Store current item to dissolve
         if (!this.currentItemToDissolve.isEmpty()) {
             compound.put("currentItemToDissolve", this.currentItemToDissolve.serializeNBT());
             compound.putInt("currentItemDissolveTicks", this.currentItemDissolveTicks);
         }
+
+        //Store current essence level
+        compound.putFloat("earthEssence", this.earthEssence);
+        compound.putFloat("airEssence", this.airEssence);
+        compound.putFloat("fireEssence", this.fireEssence);
+        compound.putFloat("waterEssence", this.waterEssence);
+
         return super.write(compound);
+
     }
 
     @Override
