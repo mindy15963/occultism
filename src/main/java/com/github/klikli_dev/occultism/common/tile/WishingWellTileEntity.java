@@ -117,27 +117,29 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
 
             if (!this.currentItemToDissolve.isEmpty()) {
                 if (this.currentSacrificeRecipe == null) {
-                    this.findRecipe(this.currentItemToDissolve).ifPresent(recipe -> this.currentSacrificeRecipe = recipe);
+                    this.findRecipe(this.currentItemToDissolve)
+                            .ifPresent(recipe -> this.currentSacrificeRecipe = recipe);
                 }
 
                 if (this.currentSacrificeRecipe != null) {
 
-                    //TODO: do the dissolve magic -> add essences
-
+                    //Dissolve item until used up.
+                    this.earthEssence += this.currentSacrificeRecipe.getEarthEssencePerTick();
+                    this.airEssence += this.currentSacrificeRecipe.getAirEssencePerTick();
+                    this.fireEssence += this.currentSacrificeRecipe.getFireEssencePerTick();
+                    this.waterEssence += this.currentSacrificeRecipe.getWaterEssencePerTick();
 
                     this.currentItemDissolveTicks++;
-                    if(this.currentItemDissolveTicks >= this.currentSacrificeRecipe.getDissolveTicks()){
+                    if (this.currentItemDissolveTicks >= this.currentSacrificeRecipe.getDissolveTicks()) {
                         //Done with dissolving item, prepare for next
-                        this.currentItemDissolveTicks = 0;
-                        this.currentItemToDissolve = ItemStack.EMPTY;
-                        this.currentSacrificeRecipe = null;
+                        this.resetCurrentItemToDissolve();
                     }
                 }
                 else {
                     //If still null: should never happen
                     Occultism.LOGGER.warn(
                             "No recipe found during tick in wishing well for Item {}, should never happen.",
-                                    this.currentItemToDissolve.getItem().getRegistryName());
+                            this.currentItemToDissolve.getItem().getRegistryName());
                 }
             }
         }
@@ -197,8 +199,14 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
     //endregion Overrides
 
     //region Methods
+    public void resetCurrentItemToDissolve() {
+        this.currentItemDissolveTicks = 0;
+        this.currentItemToDissolve = ItemStack.EMPTY;
+        this.currentSacrificeRecipe = null;
+    }
+
     public void sacrificeItem(ItemEntity item) {
-        if(this.hasValidMultiblock && item.isAlive()){
+        if (this.hasValidMultiblock && item.isAlive()) {
             this.findRecipe(item.getItem()).ifPresent(recipe -> {
                 this.itemsToDissolve.add(item.getItem());
                 item.remove(false);

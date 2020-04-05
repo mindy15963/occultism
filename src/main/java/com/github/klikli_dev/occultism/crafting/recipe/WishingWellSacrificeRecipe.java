@@ -47,6 +47,10 @@ public class WishingWellSacrificeRecipe implements IRecipe<ItemStackFakeInventor
     protected final float airEssence;
     protected final float fireEssence;
     protected final float waterEssence;
+    protected final float earthEssencePerTick;
+    protected final float airEssencePerTick;
+    protected final float fireEssencePerTick;
+    protected final float waterEssencePerTick;
 
     //endregion Fields
     //region Initialization
@@ -59,6 +63,11 @@ public class WishingWellSacrificeRecipe implements IRecipe<ItemStackFakeInventor
         this.airEssence = airEssence;
         this.fireEssence = fireEssence;
         this.waterEssence = waterEssence;
+
+        this.earthEssencePerTick = this.earthEssence / this.dissolveTicks;
+        this.airEssencePerTick = this.airEssence / this.dissolveTicks;
+        this.fireEssencePerTick = this.fireEssence / this.dissolveTicks;
+        this.waterEssencePerTick = this.waterEssence / this.dissolveTicks;
     }
     //endregion Initialization
 
@@ -81,6 +90,22 @@ public class WishingWellSacrificeRecipe implements IRecipe<ItemStackFakeInventor
 
     public int getDissolveTicks() {
         return this.dissolveTicks;
+    }
+
+    public float getWaterEssencePerTick() {
+        return this.waterEssencePerTick;
+    }
+
+    public float getFireEssencePerTick() {
+        return this.fireEssencePerTick;
+    }
+
+    public float getAirEssencePerTick() {
+        return this.airEssencePerTick;
+    }
+
+    public float getEarthEssencePerTick() {
+        return this.earthEssencePerTick;
     }
 
     //endregion Getter / Setter
