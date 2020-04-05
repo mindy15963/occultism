@@ -37,15 +37,17 @@ public class OccultismRecipes {
             ForgeRegistries.RECIPE_SERIALIZERS, Occultism.MODID);
 
     public static final NonNullLazy<IRecipeType<SpiritTradeRecipe>> SPIRIT_TRADE_TYPE =
-            NonNullLazy.of(() -> IRecipeType.register("occultism:spirit_trade"));
+            NonNullLazy.of(() -> IRecipeType.register(Occultism.MODID + ":spirit_trade"));
     public static final NonNullLazy<IRecipeType<SpiritFireRecipe>> SPIRIT_FIRE_TYPE =
-            NonNullLazy.of(() -> IRecipeType.register("occultism:spirit_fire"));
+            NonNullLazy.of(() -> IRecipeType.register(Occultism.MODID + ":spirit_fire"));
     public static final NonNullLazy<IRecipeType<CrushingRecipe>> CRUSHING_TYPE =
-            NonNullLazy.of(() -> IRecipeType.register("occultism:crushing"));
+            NonNullLazy.of(() -> IRecipeType.register(Occultism.MODID + ":crushing"));
     public static final NonNullLazy<IRecipeType<MinerRecipe>> MINER_TYPE =
-            NonNullLazy.of(() -> IRecipeType.register("occultism:miner"));
+            NonNullLazy.of(() -> IRecipeType.register(Occultism.MODID + ":miner"));
     public static final NonNullLazy<IRecipeType<RitualFakeRecipe>> RITUAL_TYPE =
-            NonNullLazy.of(() -> IRecipeType.register("occultism:ritual"));
+            NonNullLazy.of(() -> IRecipeType.register(Occultism.MODID + ":ritual"));
+    public static final NonNullLazy<IRecipeType<WishingWellSacrificeRecipe>> WISHING_WELL_SACRIFICE_TYPE =
+            NonNullLazy.of(() -> IRecipeType.register(Occultism.MODID + ":wishing_well_sacrifice"));
     public static final NonNullLazy<IRecipeType<?>> CUSTOM_SHAPELESS_TYPE =
             NonNullLazy.of(() -> IRecipeType.CRAFTING);
 
@@ -59,6 +61,8 @@ public class OccultismRecipes {
             () -> MinerRecipe.SERIALIZER);
     public static final RegistryObject<IRecipeSerializer<RitualFakeRecipe>> RITUAL = RECIPES.register("ritual",
             () -> RitualFakeRecipe.SERIALIZER);
+    public static final RegistryObject<IRecipeSerializer<WishingWellSacrificeRecipe>> WISHING_WELL_SACRIFICE = RECIPES.register("wishing_well_sacrifice",
+            () -> WishingWellSacrificeRecipe.SERIALIZER);
     public static final RegistryObject<IRecipeSerializer<CustomShapelessRecipe>> CUSTOM_SHAPELESS = RECIPES.register("custom_shapeless",
             () -> CustomShapelessRecipe.SERIALIZER);
 
