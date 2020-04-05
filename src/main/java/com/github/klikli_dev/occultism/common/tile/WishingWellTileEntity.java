@@ -160,12 +160,6 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
             this.currentItemToDissolve = ItemStack.read(compound.getCompound("currentItemToDissolve"));
             this.currentItemDissolveTicks = compound.getInt("currentItemDissolveTicks");
         }
-
-        //read current essence level
-        this.earthEssence = compound.getFloat("earthEssence");
-        this.airEssence = compound.getFloat("airEssence");
-        this.fireEssence = compound.getFloat("fireEssence");
-        this.waterEssence = compound.getFloat("waterEssence");
     }
 
     @Override
@@ -181,14 +175,28 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
             compound.putInt("currentItemDissolveTicks", this.currentItemDissolveTicks);
         }
 
+        return super.write(compound);
+
+    }
+
+    @Override
+    public void readNetwork(CompoundNBT compound) {
+        super.readNetwork(compound);
+        //read current essence level
+        this.earthEssence = compound.getFloat("earthEssence");
+        this.airEssence = compound.getFloat("airEssence");
+        this.fireEssence = compound.getFloat("fireEssence");
+        this.waterEssence = compound.getFloat("waterEssence");
+    }
+
+    @Override
+    public CompoundNBT writeNetwork(CompoundNBT compound) {
         //Store current essence level
         compound.putFloat("earthEssence", this.earthEssence);
         compound.putFloat("airEssence", this.airEssence);
         compound.putFloat("fireEssence", this.fireEssence);
         compound.putFloat("waterEssence", this.waterEssence);
-
-        return super.write(compound);
-
+        return super.writeNetwork(compound);
     }
 
     @Override
