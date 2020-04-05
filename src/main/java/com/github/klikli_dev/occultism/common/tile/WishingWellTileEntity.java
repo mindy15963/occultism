@@ -22,7 +22,11 @@
 
 package com.github.klikli_dev.occultism.common.tile;
 
+import com.github.klikli_dev.occultism.Occultism;
+import com.github.klikli_dev.occultism.crafting.recipe.ItemStackFakeInventory;
+import com.github.klikli_dev.occultism.crafting.recipe.WishingWellSacrificeRecipe;
 import com.github.klikli_dev.occultism.registry.OccultismBlocks;
+import com.github.klikli_dev.occultism.registry.OccultismRecipes;
 import com.github.klikli_dev.occultism.registry.OccultismTiles;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.fluid.Fluids;
@@ -34,6 +38,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.Constants;
 
 import java.util.ArrayDeque;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
@@ -62,9 +67,10 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
      */
     protected Queue<ItemStack> itemsToDissolve = new ArrayDeque<>();
 
-    protected ItemStack currentItemToDissolve;
-    protected int currentItemTotalDissolveTicks;
+    protected ItemStack currentItemToDissolve = ItemStack.EMPTY;
+    protected WishingWellSacrificeRecipe currentSacrificeRecipe;
     protected int currentItemDissolveTicks;
+    protected ItemStackFakeInventory sacrificeFakeInventory = new ItemStackFakeInventory(ItemStack.EMPTY);
 
     //endregion Fields
 
@@ -95,7 +101,29 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
                 this.spawnFluidColumn();
             }
             else {
+                this.removeFluidColumn();
+            }
+        }
 
+        if (this.hasValidMultiblock) {
+            if (this.currentItemToDissolve.isEmpty() && !this.itemsToDissolve.isEmpty()) {
+                this.currentItemToDissolve = this.itemsToDissolve.poll();
+            }
+
+            if (!this.currentItemToDissolve.isEmpty()) {
+                if (this.currentSacrificeRecipe == null) {
+                    this.findRecipe(this.currentItemToDissolve).ifPresent(recipe -> this.currentSacrificeRecipe = recipe);
+                }
+
+                if (this.currentSacrificeRecipe != null) {
+                    //TODO: do the dissolve magic -> add essences
+                }
+                else {
+                    //If still null: should never happen
+                    Occultism.LOGGER.warn(
+                            "No recipe found during tick in wishing well for Item {}, should never happen.",
+                                    this.currentItemToDissolve.getItem().getRegistryName());
+                }
             }
         }
     }
@@ -108,9 +136,9 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
         this.itemsToDissolve = new ArrayDeque<>(
                 nbtList.stream().map(CompoundNBT.class::cast).map(ItemStack::read).collect(Collectors.toList()));
 
+        this.currentItemToDissolve = ItemStack.EMPTY;
         if (compound.contains("currentItemToDissolve")) {
             this.currentItemToDissolve = ItemStack.read(compound.getCompound("currentItemToDissolve"));
-            this.currentItemTotalDissolveTicks =compound.getInt("currentItemTotalDissolveTicks");
             this.currentItemDissolveTicks = compound.getInt("currentItemDissolveTicks");
         }
     }
@@ -122,9 +150,8 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
         this.itemsToDissolve.forEach(itemStack -> nbtList.add(itemStack.serializeNBT()));
         compound.put("itemsToDissolve", nbtList);
 
-        if (this.currentItemToDissolve != null) {
+        if (!this.currentItemToDissolve.isEmpty()) {
             compound.put("currentItemToDissolve", this.currentItemToDissolve.serializeNBT());
-            compound.putInt("currentItemTotalDissolveTicks", this.currentItemTotalDissolveTicks);
             compound.putInt("currentItemDissolveTicks", this.currentItemDissolveTicks);
         }
         return super.write(compound);
@@ -138,14 +165,23 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
     //endregion Overrides
 
     //region Methods
-
     public void sacrificeItem(ItemEntity item) {
-        //TOOD: check if recipe exists, if so store and remove.
-        //this.itemsToDissolve.add(item.getItem());
+        if(this.hasValidMultiblock && item.isAlive()){
+            this.findRecipe(item.getItem()).ifPresent(recipe -> {
+                this.itemsToDissolve.add(item.getItem());
+                item.remove(false);
+            });
+        }
     }
 
     public boolean hasValidMultiblock() {
         return OccultismBlocks.WISTHING_WELL.get().blockMatcher.validate(this.world, this.pos) != null;
+    }
+
+    protected Optional<WishingWellSacrificeRecipe> findRecipe(ItemStack itemStack) {
+        this.sacrificeFakeInventory.setInput(itemStack);
+        return this.world.getRecipeManager().getRecipe(OccultismRecipes.WISHING_WELL_SACRIFICE_TYPE.get(),
+                this.sacrificeFakeInventory, this.world);
     }
 
     protected void spawnFluidColumn() {

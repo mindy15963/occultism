@@ -37,6 +37,12 @@ public class ItemStackFakeInventory implements IInventory {
     }
     //endregion Initialization
 
+    //region Getter / Setter
+    public void setInput(ItemStack stack) {
+        this.input = stack;
+    }
+    //endregion Getter / Setter
+
     //region Overrides
     @Override
     public int getSizeInventory() {

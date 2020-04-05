@@ -94,7 +94,7 @@ public class WishingWellSacrificeRecipe implements IRecipe<ItemStackFakeInventor
     @Override
     public ItemStack getCraftingResult(ItemStackFakeInventory inv) {
         //the output is essences, so no stuff here.
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -106,7 +106,7 @@ public class WishingWellSacrificeRecipe implements IRecipe<ItemStackFakeInventor
     @Override
     public ItemStack getRecipeOutput() {
         //the output is essences, so no stuff here.
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -126,7 +126,7 @@ public class WishingWellSacrificeRecipe implements IRecipe<ItemStackFakeInventor
 
     @Override
     public IRecipeType<?> getType() {
-        return OccultismRecipes.MINER_TYPE.get();
+        return OccultismRecipes.WISHING_WELL_SACRIFICE_TYPE.get();
     }
 
     //endregion Overrides

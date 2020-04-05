@@ -64,7 +64,7 @@ public class WishingWellSacrificeBlock extends Block {
 
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-        if (entityIn instanceof ItemEntity && !entityIn.removed){
+        if (entityIn instanceof ItemEntity && entityIn.isAlive()){
             WishingWellTileEntity wishingWell = (WishingWellTileEntity) worldIn.getTileEntity(pos.add(0, -5, 0));
             wishingWell.sacrificeItem((ItemEntity)entityIn);
         }
