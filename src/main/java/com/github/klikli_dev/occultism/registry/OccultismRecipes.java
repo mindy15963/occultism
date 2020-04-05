@@ -48,6 +48,8 @@ public class OccultismRecipes {
             NonNullLazy.of(() -> IRecipeType.register(Occultism.MODID + ":ritual"));
     public static final NonNullLazy<IRecipeType<WishingWellSacrificeRecipe>> WISHING_WELL_SACRIFICE_TYPE =
             NonNullLazy.of(() -> IRecipeType.register(Occultism.MODID + ":wishing_well_sacrifice"));
+    public static final NonNullLazy<IRecipeType<WishingWellGrowingRecipe>> WISHING_WELL_GROWING_TYPE =
+            NonNullLazy.of(() -> IRecipeType.register(Occultism.MODID + ":wishing_well_growing"));
     public static final NonNullLazy<IRecipeType<?>> CUSTOM_SHAPELESS_TYPE =
             NonNullLazy.of(() -> IRecipeType.CRAFTING);
 
@@ -63,6 +65,8 @@ public class OccultismRecipes {
             () -> RitualFakeRecipe.SERIALIZER);
     public static final RegistryObject<IRecipeSerializer<WishingWellSacrificeRecipe>> WISHING_WELL_SACRIFICE = RECIPES.register("wishing_well_sacrifice",
             () -> WishingWellSacrificeRecipe.SERIALIZER);
+    public static final RegistryObject<IRecipeSerializer<WishingWellGrowingRecipe>> WISHING_WELL_GROWING = RECIPES.register("wishing_well_growing",
+            () -> WishingWellGrowingRecipe.SERIALIZER);
     public static final RegistryObject<IRecipeSerializer<CustomShapelessRecipe>> CUSTOM_SHAPELESS = RECIPES.register("custom_shapeless",
             () -> CustomShapelessRecipe.SERIALIZER);
 
