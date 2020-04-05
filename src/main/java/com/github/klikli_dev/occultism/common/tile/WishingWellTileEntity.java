@@ -63,7 +63,7 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
     protected Queue<ItemStack> itemsToDissolve = new ArrayDeque<>();
 
     protected ItemStack currentItemToDissolve;
-    protected SacrificeTier currentItemSacrificeTier;
+    protected int currentItemTotalDissolveTicks;
     protected int currentItemDissolveTicks;
 
     //endregion Fields
@@ -110,7 +110,7 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
 
         if (compound.contains("currentItemToDissolve")) {
             this.currentItemToDissolve = ItemStack.read(compound.getCompound("currentItemToDissolve"));
-            this.currentItemSacrificeTier = SacrificeTier.values()[compound.getInt("currentItemSacrificeTier")];
+            this.currentItemTotalDissolveTicks =compound.getInt("currentItemTotalDissolveTicks");
             this.currentItemDissolveTicks = compound.getInt("currentItemDissolveTicks");
         }
     }
@@ -124,7 +124,7 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
 
         if (this.currentItemToDissolve != null) {
             compound.put("currentItemToDissolve", this.currentItemToDissolve.serializeNBT());
-            compound.putInt("currentItemSacrificeTier", this.currentItemSacrificeTier.ordinal());
+            compound.putInt("currentItemTotalDissolveTicks", this.currentItemTotalDissolveTicks);
             compound.putInt("currentItemDissolveTicks", this.currentItemDissolveTicks);
         }
         return super.write(compound);
@@ -172,20 +172,4 @@ public class WishingWellTileEntity extends NetworkedTileEntity implements ITicka
         }
     }
     //endregion Methods
-
-    public enum SacrificeTier {
-        TIER1(1.0f),
-        TIER2(2.0f),
-        TIER3(3.0f);
-
-        //region Fields
-        public float speedModifier;
-        //endregion Fields
-
-        //region Initialization
-        SacrificeTier(float speedModifier) {
-            this.speedModifier = speedModifier;
-        }
-        //endregion Initialization
-    }
 }
